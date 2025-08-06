@@ -1,0 +1,33 @@
+# MJAK Voice OS Edge TTS Server Requirements
+# High-quality TTS with explicit male voices using Microsoft Edge TTS
+
+# Core FastAPI dependencies
+fastapi>=0.104.0
+uvicorn[standard]>=0.24.0
+pydantic>=2.5.0
+
+# Environment and configuration
+python-dotenv>=1.0.0
+
+# Edge TTS - Microsoft's high-quality TTS
+edge-tts>=6.1.9
+
+# HTTP and file handling
+requests>=2.31.0
+python-multipart>=0.0.6
+aiofiles>=23.2.1
+
+# Additional utilities
+asyncio
+base64
+tempfile
+pathlib
+typing
+logging
+datetime
+subprocess
+sys
+os
+
+# Optional: For better audio handling
+# pygame>=2.5.0  # Uncomment if you need audio playback capabilities 
