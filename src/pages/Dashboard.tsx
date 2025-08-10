@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
-import { supabase } from '@/integrations/supabase/client';
+import { supabase } from '../integrations/supabase/client';
 import { Mic, Key, BarChart3, Settings, LogOut, Copy, Play, Pause, Volume2, Plus, Trash2, Eye, EyeOff } from 'lucide-react';
 
 interface ApiKey {
