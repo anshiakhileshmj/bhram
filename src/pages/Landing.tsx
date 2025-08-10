@@ -38,7 +38,7 @@ const Landing = () => {
   ];
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-black">
       {/* Navigation */}
       <nav className="fixed top-0 w-full z-50 bg-black/20 backdrop-blur-md border-b border-white/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -96,7 +96,7 @@ const Landing = () => {
               <div className="text-gray-400">Uptime</div>
             </div>
             <div className="text-center">
-              <div className="text-3xl font-bold text-purple-400 mb-2">< 200ms</div>
+              <div className="text-3xl font-bold text-purple-400 mb-2">&lt; 200ms</div>
               <div className="text-gray-400">Latency</div>
             </div>
           </div>
