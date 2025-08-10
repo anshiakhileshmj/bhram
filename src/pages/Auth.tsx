@@ -1,7 +1,56 @@
-import React from 'react';
+
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext';
 import styled from 'styled-components';
 
-const Form = () => {
+const Auth = () => {
+  const navigate = useNavigate();
+  const { signIn, signUp } = useAuth();
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    setError('');
+    
+    const formData = new FormData(e.target as HTMLFormElement);
+    const email = formData.get('email') as string;
+    const password = formData.get('password') as string;
+
+    const { error } = await signIn(email, password);
+    
+    if (error) {
+      setError(error.message);
+    } else {
+      navigate('/dashboard');
+    }
+    
+    setLoading(false);
+  };
+
+  const handleSignUp = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    setError('');
+    
+    const formData = new FormData(e.target as HTMLFormElement);
+    const name = formData.get('name') as string;
+    const email = formData.get('email') as string;
+    const password = formData.get('password') as string;
+
+    const { error } = await signUp(email, password, name);
+    
+    if (error) {
+      setError(error.message);
+    } else {
+      navigate('/dashboard');
+    }
+    
+    setLoading(false);
+  };
+
   return (
     <StyledWrapper>
       <div className="wrapper">
@@ -13,19 +62,25 @@ const Form = () => {
             <div className="flip-card__inner">
               <div className="flip-card__front">
                 <div className="title">Log in</div>
-                <form className="flip-card__form" action>
-                  <input className="flip-card__input" name="email" placeholder="Email" type="email" />
-                  <input className="flip-card__input" name="password" placeholder="Password" type="password" />
-                  <button className="flip-card__btn">Let`s go!</button>
+                {error && <div className="error-message">{error}</div>}
+                <form className="flip-card__form" onSubmit={handleLogin}>
+                  <input className="flip-card__input" name="email" placeholder="Email" type="email" required />
+                  <input className="flip-card__input" name="password" placeholder="Password" type="password" required />
+                  <button className="flip-card__btn" type="submit" disabled={loading}>
+                    {loading ? 'Loading...' : "Let's go!"}
+                  </button>
                 </form>
               </div>
               <div className="flip-card__back">
                 <div className="title">Sign up</div>
-                <form className="flip-card__form" action>
-                  <input className="flip-card__input" placeholder="Name" type="name" />
-                  <input className="flip-card__input" name="email" placeholder="Email" type="email" />
-                  <input className="flip-card__input" name="password" placeholder="Password" type="password" />
-                  <button className="flip-card__btn">Confirm!</button>
+                {error && <div className="error-message">{error}</div>}
+                <form className="flip-card__form" onSubmit={handleSignUp}>
+                  <input className="flip-card__input" name="name" placeholder="Name" type="text" required />
+                  <input className="flip-card__input" name="email" placeholder="Email" type="email" required />
+                  <input className="flip-card__input" name="password" placeholder="Password" type="password" required />
+                  <button className="flip-card__btn" type="submit" disabled={loading}>
+                    {loading ? 'Loading...' : 'Confirm!'}
+                  </button>
                 </form>
               </div>
             </div>
@@ -34,7 +89,7 @@ const Form = () => {
       </div>
     </StyledWrapper>
   );
-}
+};
 
 const StyledWrapper = styled.div`
   .wrapper {
@@ -44,13 +99,22 @@ const StyledWrapper = styled.div`
     --bg-color: #fff;
     --bg-color-alt: #666;
     --main-color: #323232;
-      /* display: flex; */
-      /* flex-direction: column; */
-      /* align-items: center; */
+    background: black;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
+
+  .error-message {
+    color: #ff4444;
+    font-size: 14px;
+    margin-bottom: 10px;
+    text-align: center;
+  }
+
   /* switch card */
   .switch {
-    transform: translateY(-200px);
     position: relative;
     display: flex;
     flex-direction: column;
@@ -100,7 +164,7 @@ const StyledWrapper = styled.div`
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: var(--bg-colorcolor);
+    background-color: var(--bg-color);
     transition: 0.3s;
   }
 
@@ -143,8 +207,6 @@ const StyledWrapper = styled.div`
     position: relative;
     background-color: transparent;
     perspective: 1000px;
-      /* width: 100%;
-      height: 100%; */
     text-align: center;
     transition: transform 0.8s;
     transform-style: preserve-3d;
@@ -233,6 +295,12 @@ const StyledWrapper = styled.div`
     font-weight: 600;
     color: var(--font-color);
     cursor: pointer;
-  }`;
+  }
 
-export default Form;
+  .flip-card__btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+`;
+
+export default Auth;
