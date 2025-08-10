@@ -1,179 +1,40 @@
-
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../contexts/AuthContext';
+import React from 'react';
 import styled from 'styled-components';
-import { Mic, ArrowLeft } from 'lucide-react';
 
-const Auth = () => {
-  const navigate = useNavigate();
-  const { signIn, signUp, user, loading } = useAuth();
-  const [isLogin, setIsLogin] = useState(true);
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    password: ''
-  });
-  const [error, setError] = useState('');
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
-  useEffect(() => {
-    if (user && !loading) {
-      navigate('/dashboard');
-    }
-  }, [user, loading, navigate]);
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
-    setError('');
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    setError('');
-
-    try {
-      if (isLogin) {
-        const { error } = await signIn(formData.email, formData.password);
-        if (error) {
-          setError(error.message);
-        }
-      } else {
-        const { error } = await signUp(formData.email, formData.password, formData.name);
-        if (error) {
-          setError(error.message);
-        } else {
-          setError('Check your email to confirm your account!');
-        }
-      }
-    } catch (err) {
-      setError('An unexpected error occurred');
-    }
-
-    setIsSubmitting(false);
-  };
-
-  if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-white">Loading...</div>
-      </div>
-    );
-  }
-
+const Form = () => {
   return (
-    <div className="min-h-screen flex items-center justify-center px-4">
-      {/* Back to Home */}
-      <button
-        onClick={() => navigate('/')}
-        className="fixed top-6 left-6 flex items-center space-x-2 text-gray-400 hover:text-white transition-colors z-10"
-      >
-        <ArrowLeft className="w-5 h-5" />
-        <span>Back to Home</span>
-      </button>
-
-      {/* Logo */}
-      <div className="fixed top-6 right-6 flex items-center space-x-2 z-10">
-        <Mic className="w-6 h-6 text-purple-400" />
-        <span className="text-lg font-semibold text-white">MJAK Voice OS</span>
-      </div>
-
-      <StyledWrapper>
-        <div className="wrapper">
-          <div className="card-switch">
-            <label className="switch">
-              <input 
-                type="checkbox" 
-                className="toggle" 
-                checked={!isLogin}
-                onChange={(e) => setIsLogin(!e.target.checked)}
-              />
-              <span className="slider" />
-              <span className="card-side" />
-              <div className="flip-card__inner">
-                <div className="flip-card__front">
-                  <div className="title">Log in</div>
-                  {error && <div className="error-message">{error}</div>}
-                  <form className="flip-card__form" onSubmit={handleSubmit}>
-                    <input 
-                      className="flip-card__input" 
-                      name="email" 
-                      placeholder="Email" 
-                      type="email" 
-                      required
-                      value={formData.email}
-                      onChange={handleInputChange}
-                    />
-                    <input 
-                      className="flip-card__input" 
-                      name="password" 
-                      placeholder="Password" 
-                      type="password" 
-                      required
-                      value={formData.password}
-                      onChange={handleInputChange}
-                    />
-                    <button 
-                      className="flip-card__btn" 
-                      type="submit"
-                      disabled={isSubmitting}
-                    >
-                      {isSubmitting ? 'Signing in...' : "Let's go!"}
-                    </button>
-                  </form>
-                </div>
-                <div className="flip-card__back">
-                  <div className="title">Sign up</div>
-                  {error && <div className="error-message">{error}</div>}
-                  <form className="flip-card__form" onSubmit={handleSubmit}>
-                    <input 
-                      className="flip-card__input" 
-                      name="name"
-                      placeholder="Name" 
-                      type="text" 
-                      required
-                      value={formData.name}
-                      onChange={handleInputChange}
-                    />
-                    <input 
-                      className="flip-card__input" 
-                      name="email" 
-                      placeholder="Email" 
-                      type="email" 
-                      required
-                      value={formData.email}
-                      onChange={handleInputChange}
-                    />
-                    <input 
-                      className="flip-card__input" 
-                      name="password" 
-                      placeholder="Password" 
-                      type="password" 
-                      required
-                      value={formData.password}
-                      onChange={handleInputChange}
-                    />
-                    <button 
-                      className="flip-card__btn" 
-                      type="submit"
-                      disabled={isSubmitting}
-                    >
-                      {isSubmitting ? 'Creating...' : 'Confirm!'}
-                    </button>
-                  </form>
-                </div>
+    <StyledWrapper>
+      <div className="wrapper">
+        <div className="card-switch">
+          <label className="switch">
+            <input type="checkbox" className="toggle" />
+            <span className="slider" />
+            <span className="card-side" />
+            <div className="flip-card__inner">
+              <div className="flip-card__front">
+                <div className="title">Log in</div>
+                <form className="flip-card__form" action>
+                  <input className="flip-card__input" name="email" placeholder="Email" type="email" />
+                  <input className="flip-card__input" name="password" placeholder="Password" type="password" />
+                  <button className="flip-card__btn">Let`s go!</button>
+                </form>
               </div>
-            </label>
-          </div>   
-        </div>
-      </StyledWrapper>
-    </div>
+              <div className="flip-card__back">
+                <div className="title">Sign up</div>
+                <form className="flip-card__form" action>
+                  <input className="flip-card__input" placeholder="Name" type="name" />
+                  <input className="flip-card__input" name="email" placeholder="Email" type="email" />
+                  <input className="flip-card__input" name="password" placeholder="Password" type="password" />
+                  <button className="flip-card__btn">Confirm!</button>
+                </form>
+              </div>
+            </div>
+          </label>
+        </div>   
+      </div>
+    </StyledWrapper>
   );
-};
+}
 
 const StyledWrapper = styled.div`
   .wrapper {
@@ -183,15 +44,10 @@ const StyledWrapper = styled.div`
     --bg-color: #fff;
     --bg-color-alt: #666;
     --main-color: #323232;
+      /* display: flex; */
+      /* flex-direction: column; */
+      /* align-items: center; */
   }
-
-  .error-message {
-    color: #ef4444;
-    font-size: 14px;
-    margin-bottom: 10px;
-    text-align: center;
-  }
-
   /* switch card */
   .switch {
     transform: translateY(-200px);
@@ -244,7 +100,7 @@ const StyledWrapper = styled.div`
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: var(--bg-color);
+    background-color: var(--bg-colorcolor);
     transition: 0.3s;
   }
 
@@ -280,12 +136,15 @@ const StyledWrapper = styled.div`
   }
 
   /* card */ 
+
   .flip-card__inner {
     width: 300px;
-    height: 400px;
+    height: 350px;
     position: relative;
     background-color: transparent;
     perspective: 1000px;
+      /* width: 100%;
+      height: 100%; */
     text-align: center;
     transition: transform 0.8s;
     transform-style: preserve-3d;
@@ -357,7 +216,7 @@ const StyledWrapper = styled.div`
     border: 2px solid var(--input-focus);
   }
 
-  .flip-card__btn:active {
+  .flip-card__btn:active, .button-confirm:active {
     box-shadow: 0px 0px var(--main-color);
     transform: translate(3px, 3px);
   }
@@ -374,13 +233,6 @@ const StyledWrapper = styled.div`
     font-weight: 600;
     color: var(--font-color);
     cursor: pointer;
-    transition: all 0.2s;
-  }
+  }`;
 
-  .flip-card__btn:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-  }
-`;
-
-export default Auth;
+export default Form;
