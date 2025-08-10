@@ -99,7 +99,7 @@ const StyledWrapper = styled.div`
     --bg-color: #fff;
     --bg-color-alt: #666;
     --main-color: #323232;
-    background: black;
+    background: white;
     min-height: 100vh;
     display: flex;
     align-items: center;

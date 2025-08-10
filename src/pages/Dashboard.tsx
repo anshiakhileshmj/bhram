@@ -442,14 +442,12 @@ Content-Type: application/json
               </div>
 
               <div className="flex space-x-3">
-                <a
-                  href="https://edge-tts-g3en.onrender.com/docs"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <button
+                  onClick={() => navigate('/docs')}
                   className="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition-colors"
                 >
                   Full Documentation
-                </a>
+                </button>
               </div>
             </div>
           </div>
