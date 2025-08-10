@@ -133,7 +133,7 @@ const Auth = () => {
                     <input 
                       className="flip-card__input" 
                       name="name"
-                      placeholder="Full Name" 
+                      placeholder="Name" 
                       type="text" 
                       required
                       value={formData.name}

@@ -48,9 +48,12 @@ const Landing = () => {
               <span className="text-2xl font-bold text-white">MJAK Voice OS</span>
             </div>
             <div className="flex items-center space-x-6">
+              <a href="/docs" className="text-gray-300 hover:text-white transition-colors">
+                API Docs
+              </a>
               <a href="https://edge-tts-g3en.onrender.com/docs" target="_blank" rel="noopener noreferrer" 
                  className="text-gray-300 hover:text-white transition-colors">
-                API Docs
+                Live API
               </a>
               <a href="/auth" className="text-gray-300 hover:text-white transition-colors">
                 Sign In
@@ -180,9 +183,7 @@ const result = await response.json();`}
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <GetStartedButton />
             <a 
-              href="https://edge-tts-g3en.onrender.com/docs" 
-              target="_blank" 
-              rel="noopener noreferrer"
+              href="/docs"
               className="px-8 py-4 bg-transparent border border-purple-500 text-purple-400 rounded-lg hover:bg-purple-500 hover:text-white transition-all duration-300"
             >
               View API Docs
@@ -200,9 +201,12 @@ const result = await response.json();`}
               <span className="text-lg font-semibold text-white">MJAK Voice OS</span>
             </div>
             <div className="flex space-x-6">
+              <a href="/docs" className="text-gray-400 hover:text-white transition-colors">
+                Documentation
+              </a>
               <a href="https://edge-tts-g3en.onrender.com/docs" target="_blank" rel="noopener noreferrer" 
                  className="text-gray-400 hover:text-white transition-colors">
-                Documentation
+                Live API
               </a>
               <a href="/auth" className="text-gray-400 hover:text-white transition-colors">
                 Dashboard
